@@ -1810,10 +1810,12 @@ let
 
     l2tpSessions = mkOption {
       default = [];
-      example = [ {
-        SessionId = 25;
-        PeerSessionId = 26;
-        Name = "l2tp-sess";
+      example = [{
+        l2tpSessionConfig = {
+          SessionId = 25;
+          PeerSessionId = 26;
+          Name = "l2tp-sess";
+        };
       }];
       type = types.listOf (mkSubsectionType "l2tpSessionConfig" check.netdev.sectionL2TPSession);
       description = ''
@@ -1843,13 +1845,15 @@ let
 
     wireguardPeers = mkOption {
       default = [];
-      example = [ {
-        Endpoint = "192.168.1.1:51820";
-        PublicKey = "27s0OvaBBdHoJYkH9osZpjpgSOVNw+RaKfboT/Sfq0g=";
-        PresharedKeyFile = "/etc/wireguard/psk.key";
-        AllowedIPs = [ "10.0.0.1/32" ];
-        PersistentKeepalive = 15;
-      } ];
+      example = [{
+        wireguardPeerConfig = {
+          Endpoint = "192.168.1.1:51820";
+          PublicKey = "27s0OvaBBdHoJYkH9osZpjpgSOVNw+RaKfboT/Sfq0g=";
+          PresharedKeyFile = "/etc/wireguard/psk.key";
+          AllowedIPs = [ "10.0.0.1/32" ];
+          PersistentKeepalive = 15;
+        };
+      }];
       type = types.listOf (mkSubsectionType "wireguardPeerConfig" check.netdev.sectionWireGuardPeer);
       description = ''
         Each item in this array specifies an option in the
@@ -2033,7 +2037,7 @@ let
 
     ipv6PREF64Prefixes = mkOption {
       default = [];
-      example = [ { Prefix = "64:ff9b::/96"; } ];
+      example = [ { ipv6PREF64PrefixConfig = { Prefix = "64:ff9b::/96"; }; } ];
       type = types.listOf (mkSubsectionType "ipv6PREF64PrefixConfig" check.network.sectionIPv6PREF64Prefix);
       description = ''
         A list of IPv6PREF64Prefix sections to be added to the unit. See
@@ -2043,7 +2047,7 @@ let
 
     dhcpServerStaticLeases = mkOption {
       default = [];
-      example = [ { MACAddress = "65:43:4a:5b:d8:5f"; Address = "192.168.1.42"; } ];
+      example = [ { dhcpServerStaticLeaseConfig = { MACAddress = "65:43:4a:5b:d8:5f"; Address = "192.168.1.42"; }; } ];
       type = types.listOf (mkSubsectionType "dhcpServerStaticLeaseConfig" check.network.sectionDHCPServerStaticLease);
       description = ''
         A list of DHCPServerStaticLease sections to be added to the unit.  See
@@ -2053,7 +2057,7 @@ let
 
     ipv6Prefixes = mkOption {
       default = [];
-      example = [ { AddressAutoconfiguration = true; OnLink = true; } ];
+      example = [ { ipv6PrefixConfig = { AddressAutoconfiguration = true; OnLink = true; }; } ];
       type = types.listOf (mkSubsectionType "ipv6PrefixConfig" check.network.sectionIPv6Prefix);
       description = ''
         A list of ipv6Prefix sections to be added to the unit.  See
@@ -2063,7 +2067,7 @@ let
 
     ipv6RoutePrefixes = mkOption {
       default = [];
-      example = [ { Route = "fd00::/64"; LifetimeSec = 3600; } ];
+      example = [ { ipv6RoutePrefixConfig = { Route = "fd00::/64"; LifetimeSec = 3600; }; } ];
       type = types.listOf (mkSubsectionType "ipv6RoutePrefixConfig" check.network.sectionIPv6RoutePrefix);
       description = ''
         A list of ipv6RoutePrefix sections to be added to the unit.  See
@@ -2084,7 +2088,7 @@ let
 
     bridgeFDBs = mkOption {
       default = [];
-      example = [ { MACAddress = "90:e2:ba:43:fc:71"; Destination = "192.168.100.4"; VNI = 3600; } ];
+      example = [ { bridgeFDBConfig = { MACAddress = "90:e2:ba:43:fc:71"; Destination = "192.168.100.4"; VNI = 3600; }; } ];
       type = types.listOf (mkSubsectionType "bridgeFDBConfig" check.network.sectionBridgeFDB);
       description = ''
         A list of BridgeFDB sections to be added to the unit.  See
@@ -2094,7 +2098,7 @@ let
 
     bridgeMDBs = mkOption {
       default = [];
-      example = [ { MulticastGroupAddress = "ff02::1:2:3:4"; VLANId = 10; } ];
+      example = [ { bridgeMDBConfig = { MulticastGroupAddress = "ff02::1:2:3:4"; VLANId = 10; }; } ];
       type = types.listOf (mkSubsectionType "bridgeMDBConfig" check.network.sectionBridgeMDB);
       description = ''
         A list of BridgeMDB sections to be added to the unit.  See
@@ -2412,7 +2416,7 @@ let
 
     bridgeVLANs = mkOption {
       default = [];
-      example = [ { VLAN = "10-20"; } ];
+      example = [ { bridgeVLANConfig = { VLAN = "10-20"; }; } ];
       type = types.listOf (mkSubsectionType "bridgeVLANConfig" check.network.sectionBridgeVLAN);
       description = ''
         A list of BridgeVLAN sections to be added to the unit.  See
@@ -2563,7 +2567,7 @@ let
 
     addresses = mkOption {
       default = [ ];
-      example = [ { Address = "192.168.0.100/24"; } ];
+      example = [ { addressConfig = { Address = "192.168.0.100/24"; }; } ];
       type = types.listOf (mkSubsectionType "addressConfig" check.network.sectionAddress);
       description = ''
         A list of address sections to be added to the unit.  See
@@ -2573,7 +2577,7 @@ let
 
     routingPolicyRules = mkOption {
       default = [ ];
-      example = [ { Table = 10; IncomingInterface = "eth1"; Family = "both"; } ];
+      example = [ { routingPolicyRuleConfig = { Table = 10; IncomingInterface = "eth1"; Family = "both"; }; } ];
       type = types.listOf (mkSubsectionType "routingPolicyRuleConfig" check.network.sectionRoutingPolicyRule);
       description = ''
         A list of routing policy rules sections to be added to the unit.  See
@@ -2583,7 +2587,7 @@ let
 
     routes = mkOption {
       default = [ ];
-      example = [ { Gateway = "192.168.0.1"; } ];
+      example = [ { routeConfig = { Gateway = "192.168.0.1"; }; } ];
       type = types.listOf (mkSubsectionType "routeConfig" check.network.sectionRoute);
       description = ''
         A list of route sections to be added to the unit.  See
