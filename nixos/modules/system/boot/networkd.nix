@@ -416,8 +416,7 @@ let
           "RouteTable"
           "RouteMetric"
         ])
-        (assertInt "FirewallMark")
-        (assertRange "FirewallMark" 1 4294967295)
+        (assertMarkOrMask "FirewallMark")
       ];
 
       # NOTE The PresharedKey directive is missing on purpose here, please
@@ -770,8 +769,7 @@ let
         ])
         (assertInt "TypeOfService")
         (assertRange "TypeOfService" 0 255)
-        (assertInt "FirewallMark")
-        (assertRange "FirewallMark" 1 4294967295)
+        (assertMarkOrMask "FirewallMark")
         (assertInt "Priority")
         (assertPortOrPortRange "SourcePort")
         (assertPortOrPortRange "DestinationPort")
@@ -1381,8 +1379,7 @@ let
             "diffserv4"
             "diffserv3"
           ])
-        (assertInt "FirewallMark")
-        (assertRange "FirewallMark" 1 4294967295)
+        (assertMarkOrMask "FirewallMark")
         (assertValueOneOf "Wash" boolValues)
         (assertValueOneOf "SplitGSO" boolValues)
         (assertValueOneOf "AckFilter" (boolValues ++ ["aggressive"]))

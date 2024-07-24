@@ -136,6 +136,13 @@ in rec {
     optional (attr ? ${name} && ! isPortOrPortRange attr.${name})
       "Error on the systemd ${group} field `${name}': ${attr.name} is not a valid port number or range of port numbers.";
 
+  isMarkOrMask = v:
+    ((isInt v) && 1 <= v && v <= 4294967295) || ((length (splitString "/" v)) == 2);
+
+  assertMarkOrMask = name: group: attr:
+    optional (attr ? ${name} && ! isMarkOrMask attr.${name})
+      "Error on the systemd ${group} field `${name}': ${attr.name} is not a valid FwMark or FwMark/Mask.";
+
   assertValueOneOf = name: values: group: attr:
     optional (attr ? ${name} && !elem attr.${name} values)
       "Systemd ${group} field `${name}' cannot have value `${toString attr.${name}}'.";
